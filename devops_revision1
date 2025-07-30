@@ -1,0 +1,119 @@
+# 📘 DevOps 1-Page Revision Sheet (with Descriptions)
+
+---
+
+🔧 **Linux Commands**
+- `ls -l` – List files with permissions
+- `cd /path` – Change directory
+- `pwd` – Show current directory
+- `cp src dest` – Copy file/folder
+- `mv src dest` – Move or rename file/folder
+- `rm -rf dir` – Delete folder recursively
+- `chmod 755 file` – Set file permission to rwxr-xr-x
+- `chown user:group file` – Change ownership
+- `groups user` – Show groups for a user
+- `ps aux | grep nginx` – View nginx processes
+- `kill <PID>` – Terminate specific process
+- `killall nginx` – Kill all nginx processes
+- `systemctl status ssh` – Show SSH service status
+- `systemctl restart nginx` – Restart nginx
+- `journalctl -xe` – Show system logs
+
+---
+
+👥 **User & Group Management**
+- `useradd -m -s /bin/bash user` – Add user with home and shell
+- `passwd user` – Set/change password
+- `usermod -aG sudo user` – Add user to sudo group
+- `groupadd devgrp` – Create new group
+- `usermod -aG devgrp user` – Add user to group
+- `id user` – Show UID, GID, groups
+- `cat /etc/passwd` – List users
+- `cat /etc/group` – List groups
+- `cat /etc/shadow` – View password hashes (root only)
+
+---
+
+💻 **Bash Scripting**
+- `#!/bin/bash` – Shebang (interpreter path)
+- `name="Kiran"` – Variable assignment
+- `echo "Hi $name"` – Print variable
+- `if [ "$name" == "Kiran" ]; then echo "Hi"; fi` – Condition
+- `for i in {1..3}; do echo $i; done` – Loop through numbers
+- `greet() { echo Hello $1; }` – Define function
+- `greet "Kiran"` – Call function
+
+---
+
+🕒 **Crontab Scheduling**
+- `crontab -e` – Edit user crontab
+- `*/2 * * * * /path/script.sh` – Run every 2 minutes
+- `0 0 * * 1-5 command` – Run at midnight Mon–Fri
+
+---
+
+🐳 **Docker**
+- `docker ps -a` – List all containers
+- `docker images` – List all images
+- `docker run -d -p 8080:80 nginx` – Run nginx container
+- `docker exec -it <id> bash` – Shell into container
+- `docker build -t app .` – Build image from Dockerfile
+- `docker-compose up -d` – Run containers in background
+**Dockerfile example:**
+```Dockerfile
+FROM python:3.10
+WORKDIR /app
+COPY . .
+RUN pip install -r requirements.txt
+CMD ["python", "app.py"]
+
+
+
+🌐 Networking
+
+ip a – Show network interfaces and IPs
+
+ip r – Show routing table
+
+hostname -I – Show IP address
+
+ping 8.8.8.8 – Test connectivity
+
+traceroute google.com – Show route to destination
+
+netstat -tulnp – List active ports and services
+
+ss -tulnp – Same as above, faster
+
+lsof -i :80 – Show processes using port 80
+
+dig example.com – DNS resolution details
+
+nslookup example.com – DNS lookup
+
+cat /etc/resolv.conf – DNS config
+
+nc -zv host port – Port check
+
+ufw status – Show firewall rules (Ubuntu)
+
+sudo ufw allow 22 – Allow SSH port
+
+arp -a – Show ARP cache
+
+
+
+Git Commands
+
+git clone <repo> – Clone repo
+
+git add . – Stage changes
+
+git commit -m "msg" – Commit changes
+
+git push origin main – Push to main branch
+
+git pull – Pull latest changes
+
+git checkout -b feature – Create new branch
+

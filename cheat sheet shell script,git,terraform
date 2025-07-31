@@ -1,0 +1,71 @@
+# 📜 Shell Scripting – Basics
+#!/bin/bash            # Shebang: defines interpreter
+echo "Hello"           # Print to stdout
+var="value"            # Define variable
+echo $var              # Access variable
+if [ "$var" == "value" ]; then ... fi      # If condition
+for i in {1..5}; do ... done               # For loop
+while [ $count -lt 5 ]; do ... done        # While loop
+read name             # Read user input
+$(command)            # Command substitution
+function greet() { ... }  # Define function
+exit 0                # Exit with status code
+
+# ⛓️ Shell Scripting – DevOps Use
+chmod +x script.sh           # Make script executable
+./script.sh                  # Run script
+crontab -e                   # Schedule script with cron
+ps aux | grep process        # Find running processes
+systemctl restart nginx      # Restart service via script
+
+# 🌱 Git – Basics
+git init                     # Initialize repo
+git clone URL                # Clone repo
+git status                   # Show status
+git add file                 # Stage file
+git commit -m "msg"          # Commit changes
+git push origin main         # Push to remote
+git pull                     # Fetch and merge latest
+git log                      # View history
+git diff                     # See file changes
+git branch                   # List branches
+git checkout -b new-branch   # Create/switch branch
+git merge branch             # Merge branch
+
+# 🔐 Git – Collaboration
+git remote -v                # Show remotes
+git remote add origin URL    # Link to remote repo
+git fetch                    # Fetch branches
+git stash                    # Save WIP changes
+git rebase                   # Reapply commits
+git revert <commit>          # Undo a commit
+
+# 🏗️ Terraform – Basics
+terraform init               # Init working dir
+terraform fmt                # Format configs
+terraform validate           # Check syntax
+terraform plan               # Show changes
+terraform apply              # Apply changes
+terraform destroy            # Tear down infra
+terraform show               # Show state
+terraform output             # Get output variables
+terraform state list         # List resources
+terraform version            # Check version
+
+# 📁 Terraform – File Structure
+main.tf                      # Primary config
+variables.tf                 # Input variables
+outputs.tf                   # Outputs
+terraform.tfvars             # Actual values
+provider "aws" { ... }       # Define cloud provider
+
+# ⚙️ Terraform – Useful Tricks
+export TF_LOG=DEBUG          # Enable debug logs
+terraform taint <resource>   # Mark resource for recreation
+terraform import ...         # Import existing infra
+terraform workspace ...      # Manage environments
+
+# 🧰 Bonus – Useful Paths
+~/.bashrc or ~/.zshrc        # Shell config files
+~/.gitconfig                 # Git config file
+~/.terraform.d/              # Terraform plugin/data dir

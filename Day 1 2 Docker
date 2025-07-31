@@ -1,0 +1,51 @@
+📝 Docker Day 1–2 Revision Notes
+
+🐳 Docker Basics
+----------------
+docker version                 # Check Docker version
+docker info                    # System-wide Docker info
+docker ps -a                   # List all containers (running + exited)
+docker run ubuntu echo "hi"   # Run 'echo hi' inside ubuntu container
+docker rm <container_id>       # Remove container
+docker rmi <image_id>          # Remove image
+
+🏗️ Building Images
+-------------------
+# Sample Dockerfile:
+FROM ubuntu:latest
+COPY start.sh /start.sh
+CMD ["/start.sh"]
+
+docker build -t myimage:v1 .   # Build image from Dockerfile
+docker images                  # List available images
+
+🧪 Running Containers
+----------------------
+docker run myimage:v1          # Run a container from custom image
+docker exec -it <container_id> bash  # Open bash inside a running container
+
+🔁 CMD vs ENTRYPOINT
+---------------------
+CMD: Default command to run (can be overridden)
+ENTRYPOINT: Main process (hard to override)
+
+# Syntax:
+CMD ["bash", "hello.sh"]
+ENTRYPOINT ["bash", "hello.sh"]
+
+✅ You can use both — CMD becomes args to ENTRYPOINT.
+
+🧰 Common Issues
+-----------------
+- exec format error → File not executable or has Windows line endings
+  (fix: chmod +x file and dos2unix if needed)
+- pull access denied → Trying to run image that doesn’t exist locally or on Docker Hub
+
+✅ Real-World Use Cases
+------------------------
+- Consistent deployments
+- CI/CD pipelines
+- Microservice containers
+- Local isolated dev environments
+
+Next: Docker Networking, Volumes, Docker Compose

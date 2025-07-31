@@ -1,0 +1,112 @@
+# 📘 DevOps Quick Reference — Linux · Networking · SQL · Docker
+
+---
+
+## 🐧 Linux Essentials
+
+```bash
+# User & Permissions
+whoami; id; groups; sudo -l
+adduser devuser; usermod -aG sudo devuser
+passwd devuser
+
+# File & Directory
+ls -l; cd; pwd; mkdir; touch; rm -rf
+chmod 755 file.sh; chown user:group file
+
+# Process Monitoring
+ps aux | grep app
+top / htop
+kill -9 PID; uptime; lsof | grep port
+
+# Services & Logs
+systemctl status nginx
+journalctl -xe
+df -h; du -sh *
+
+# Networking (Linux)
+ip a; ip route; hostname -I
+ping 8.8.8.8; traceroute google.com
+ss -tulwn; netstat -tulnp
+dig domain.com; nslookup domain.com
+tcpdump -i eth0; iftop; mtr google.com
+```
+
+---
+
+## 🌐 Networking Tips
+
+- Understanding DNS: `dig +short host`
+- Check open ports: `nc -zv host port`
+- Firewall: `iptables -L` or `ufw status`
+- Mount ports/NAT: `docker run -p host:container`
+- Test HTTP headers: `curl -I http://example.com`
+
+---
+
+## 🛢️ SQL Essentials (MySQL / MariaDB)
+
+```sql
+SELECT User, Host FROM mysql.user;
+SHOW GRANTS FOR 'user'@'localhost';
+SHOW PROCESSLIST;
+-- Create user & grant
+CREATE USER 'user1'@'localhost' IDENTIFIED BY 'pass';
+GRANT ALL ON db.* TO 'user1'@'localhost';
+FLUSH PRIVILEGES;
+-- Backup/Restore
+mysqldump -u root -p dbname > backup.sql
+mysql -u root -p dbname < backup.sql
+```
+
+---
+
+## 🐳 Docker Cheat Sheet (adapted from wsargent/docker-cheat-sheet)
+
+```bash
+# Docker CLI Basics
+docker version; docker info
+docker ps -a; docker logs <cid>
+docker exec -it <cid> bash
+
+# Build & Image Lifecycle
+docker build -t imagename:tag .
+docker images; docker history imagename
+docker rmi imagename
+
+# Containers Control
+docker run -it image
+docker run -d --name cname image
+docker stop cname; docker rm cname
+docker container prune; docker system prune -a
+
+# Dockerfile Building Blocks
+FROM ubuntu:latest
+COPY file /path/
+RUN apt update && apt install -y curl
+WORKDIR /app
+ENV KEY=value
+EXPOSE 80
+VOLUME /data
+ENTRYPOINT ["./start.sh"]
+CMD ["default", "args"]
+
+# Networking & Volumes
+docker port cname
+docker volume create volname
+docker run -v volname:/data image
+docker volume ls; docker volume prune
+
+# Compose & Multi-Container
+docker-compose up -d
+docker-compose logs; docker-compose down
+```
+
+---
+
+## 🧠 Interview Prep Tips
+
+- Always inspect each Dockerfile layer: use `docker history imagename`
+- Practice troubleshooting: wrong paths, permissions, unsupported binaries
+- Know which tools to use: `ss` vs `netstat`, `dig` vs `nslookup`
+- Understand stateless vs stateful containers and why volumes matter

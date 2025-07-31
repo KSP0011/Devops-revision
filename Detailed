@@ -1,0 +1,59 @@
+# 🗂️ File & System Checks
+ls -l                    # 🔹 List files in long format ➤ Check permissions, missing scripts
+cd /var/log              # 🔹 Change directory ➤ Investigate system and app logs
+df -h                    # 🔹 Disk usage (human-readable) ➤ Diagnose "No space left" errors
+du -sh *                 # 🔹 Folder size summary ➤ Find large folders (logs/tmp)
+
+# ⚙️ Process & Service Monitoring
+ps aux                   # 🔹 List all running processes ➤ Check for hung/zombie processes
+top / htop               # 🔹 Monitor CPU/mem usage live ➤ Spot high resource usage
+systemctl status nginx   # 🔹 Service status ➤ Check if nginx or other service is active
+journalctl -xe           # 🔹 Recent logs ➤ Investigate systemd crashes or failures
+kill -9 1234             # 🔹 Force kill a process ➤ Stop unresponsive or stuck processes
+
+# 👤 User & Permission Issues
+adduser devuser          # 🔹 Create new user ➤ Set up service/dev accounts
+usermod -aG sudo devuser # 🔹 Add user to sudo ➤ Grant admin privileges
+chown user:group file    # 🔹 Change file ownership ➤ Fix permission denied errors
+chmod +x script.sh       # 🔹 Make script executable ➤ Resolve “Permission denied” for scripts
+
+# 🧠 Bash Scripting & Automation
+#!/bin/bash              # 🔹 Script header ➤ Ensure Bash interpreter runs the script
+for i in {1..3}; do echo $i; done       # 🔹 Loop ➤ Automate repetitive command blocks
+if [ -f file ]; then echo "Exists"; fi  # 🔹 Condition ➤ Prevent script from failing on missing files
+$(command)               # 🔹 Command substitution ➤ Capture and reuse command outputs
+crontab -e               # 🔹 Edit cron jobs ➤ Schedule scripts like backups/health checks
+
+# 🐳 Docker Debugging
+docker ps -a             # 🔹 List all containers ➤ Identify failed/stopped containers
+docker logs container    # 🔹 View container logs ➤ Debug app startup or runtime errors
+docker exec -it ID bash  # 🔹 Shell inside container ➤ Manually inspect or debug configs
+docker build -t app .    # 🔹 Build image ➤ Resolve build issues (bad Dockerfile)
+docker run -p 8080:80 nginx  # 🔹 Start container ➤ Test web app or API endpoint locally
+
+# 🌱 Git Essentials
+git status               # 🔹 Current file states ➤ See what’s staged or modified
+git log --oneline        # 🔹 Short history ➤ Trace recent commits quickly
+git clone / pull         # 🔹 Clone/update repo ➤ Sync changes or set up new env
+git diff HEAD            # 🔹 Show file changes ➤ Debug code regressions or bugs
+
+# 🛢️ SQL & Database Diagnostics
+SELECT User, Host FROM mysql.user;        # 🔹 Show DB users ➤ Check user existence
+SHOW GRANTS FOR 'user'@'localhost';       # 🔹 User permissions ➤ Verify DB access rights
+SHOW PROCESSLIST;                         # 🔹 Running queries ➤ Find long/blocking queries
+mysqldump -u root -p db > backup.sql      # 🔹 Backup ➤ Safe before schema/data changes
+
+# 🌐 Networking & Connectivity
+ip a                    # 🔹 Show network interfaces ➤ Check if IPs are assigned
+ping 8.8.8.8            # 🔹 Ping Google DNS ➤ Test basic network connectivity
+curl -I http://site     # 🔹 HTTP headers ➤ Validate web/app response headers
+netstat -tulnp          # 🔹 Ports and services ➤ Check listening ports and PIDs
+ss -tulwn               # 🔹 Socket details ➤ More accurate net check than netstat
+dig domain.com          # 🔹 DNS lookup ➤ Resolve domain-to-IP issues
+
+# 📌 DevOps Core Concepts (Quick Recall)
+CI/CD         ➤ Jenkins, GitHub Actions automate build → test → deploy  
+IaC           ➤ Terraform/Ansible for infrastructure via code  
+Containers    ➤ Docker for consistent, portable environments  
+Monitoring    ➤ Prometheus + Grafana for metrics and alerts  
+Logging       ➤ ELK stack (Elasticsearch, Logstash, Kibana) to centralize logs  

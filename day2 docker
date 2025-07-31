@@ -1,0 +1,53 @@
+📦 Docker Day 2 Summary – Intermediate Concepts
+
+1. ✅ Dockerfile Basics Recap:
+   - `FROM ubuntu:latest` → Base image
+   - `COPY start.sh /start.sh` → Copy local file into container
+   - `CMD ["/start.sh"]` → Default command to run when container starts
+
+2. 🚀 Building & Running Custom Image:
+   - Build: `docker build -t myubuntu:v2 .`
+   - Run: `docker run myubuntu:v2`
+   - Alternate naming: `docker build -t run .`
+
+3. ❗ Common Errors:
+   - `exec format error` → Likely due to Windows line endings (`\r\n`). Fix with `dos2unix start.sh`
+   - `COPY` vs `ADD`: Use `COPY` for local files; `ADD` for remote URLs or archive extraction.
+
+4. 🧠 CMD vs ENTRYPOINT:
+   - `CMD` sets default *arguments* or command.
+   - `ENTRYPOINT` sets the *main executable*.
+   - You can override CMD at runtime but not ENTRYPOINT (easily).
+   - Example:
+     ```
+     ENTRYPOINT ["echo"]
+     CMD ["Hello from container"]
+     ```
+
+5. 🔁 Removing Multiple Containers/Images:
+   - Containers: `docker rm $(docker ps -aq)`
+   - Images: `docker rmi $(docker images -q)`
+
+6. 🌐 Nginx Demo Practice:
+   - Base: `FROM nginx`
+   - Create custom `index.html`
+   - `COPY index.html /usr/share/nginx/html/index.html`
+   - Expose & Run:
+     ```bash
+     docker build -t mynginx .
+     docker run -d -p 8080:80 mynginx
+     ```
+
+7. 🧰 Good Practices:
+   - Use `.dockerignore` to exclude files from build context.
+   - Clean up unused containers/images with:
+     - `docker system prune`
+     - `docker container prune`
+     - `docker image prune`
+
+8. 🌍 Real-world Use:
+   - Dockerfiles automate container environments.
+   - CMD & ENTRYPOINT help define container behavior.
+   - nginx used for static sites, reverse proxies, load balancing.
+
+📌 Tomorrow: Volume mounting, exposing ports, Docker networking, and Docker Compose (intro).

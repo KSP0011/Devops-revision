@@ -1,0 +1,36 @@
+echo "This change is in the dev-feature branch" >> file1.txt
+# ✅ Git Practice Summary (Day 1)
+
+# 🔹 Initialize Git Repository
+git init
+
+# 🔹 Check Git Status
+git status
+
+# 🔹 Create and Commit a File
+echo "hello git" > file1.txt
+git add file1.txt
+git commit -m "Initial commit with file1.txt"
+
+# 🔹 View Commit Log
+git log
+
+# 🔹 View Unstaged Changes (after editing)
+git diff
+
+# 🔀 Branching
+# Create and switch to a new branch
+git branch dev-feature
+git checkout dev-feature
+
+# Make a change in the new branch
+echo "This change is in the dev-feature branch" >> file1.txt
+git diff
+git add file1.txt
+git commit -m "Added branch-specific line in dev-feature"
+
+# Switch back to main branch
+git checkout master
+
+# Verify file content (change not visible here)
+cat file1.txt

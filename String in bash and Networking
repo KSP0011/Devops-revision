@@ -1,0 +1,83 @@
+######################
+# 🐚 SHELL SCRIPTING
+######################
+
+# Arithmetic evaluation
+(( expression ))         # e.g., (( a + b ))
+$(( expression ))        # e.g., echo $((a + b))
+
+# Command substitution
+$(command)               # Preferred: echo "Today is $(date)"
+`command`                # Legacy: echo "Today is `date`"
+
+# Conditional checks
+[ condition ]            # Single brackets (older style)
+[[ condition ]]          # Advanced test, supports pattern matching
+(( condition ))          # For numeric conditions (e.g., ((a > b)))
+
+# Examples:
+if [ "$a" -gt 5 ]; then echo "OK"; fi
+if [[ "$name" == K* ]]; then echo "Starts with K"; fi
+if (( a % 2 == 0 )); then echo "Even"; fi
+
+# String manipulation
+str="DevOpsWorld"
+echo ${str#Dev}      # OpsWorld (remove shortest match from front)
+echo ${str##Dev}     # OpsWorld (same here)
+echo ${str%World}    # DevOps (remove shortest match from end)
+echo ${str%%World}   # DevOps (same here)
+
+# Arithmetic via 'bc'
+echo "3 * 5" | bc     # Output: 15
+
+###############################
+# 🌐 OSI Model (7 Layers)
+###############################
+1. Physical      – Wires, signals
+2. Data Link     – MAC address, Switch
+3. Network       – IP address, Router
+4. Transport     – TCP/UDP, Ports
+5. Session       – Sessions, APIs
+6. Presentation  – Data format (encryption, compression)
+7. Application   – Apps, HTTP, DNS, FTP
+
+🎵 Mnemonic: **Please Do Not Touch Steve’s Pet Alligator**
+
+###############################
+# 🌐 TCP/IP Model (4 Layers)
+###############################
+1. Network Access – Ethernet, MAC
+2. Internet       – IP, ICMP
+3. Transport      – TCP, UDP
+4. Application    – HTTP, DNS, SSH
+
+🍔 Mnemonic: **Nice Indian Tasty Appetizers**
+
+###############################
+# 📡 Common Internet Protocols
+###############################
+
+| Protocol | Layer       | Purpose                           | Port |
+|----------|-------------|------------------------------------|------|
+| IP       | Internet     | Routing & addressing               | —    |
+| ICMP     | Internet     | Ping, traceroute                   | —    |
+| TCP      | Transport    | Reliable connection                | —    |
+| UDP      | Transport    | Fast, connectionless               | —    |
+| HTTP     | Application  | Web (insecure)                     | 80   |
+| HTTPS    | Application  | Secure web                         | 443  |
+| FTP      | Application  | File transfer                      | 21   |
+| SFTP     | Application  | Secure FTP over SSH                | 22   |
+| SSH      | Application  | Secure shell (remote login)        | 22   |
+| DNS      | Application  | Domain name to IP                  | 53   |
+| DHCP     | Application  | IP allocation                      | 67/68|
+| SMTP     | Application  | Sending email                      | 25   |
+| IMAP     | Application  | Reading email                      | 143  |
+| POP3     | Application  | Downloading email                  | 110  |
+| NTP      | Application  | Time sync                          | 123  |
+| Telnet   | Application  | Legacy terminal (insecure)         | 23   |
+
+✅ DevOps Focus:
+- SSH, HTTP/HTTPS, DNS, ICMP, TCP/UDP, SFTP
+
+📌 Mnemonic: **Some Dogs Can Hide All Food Diligently**
+

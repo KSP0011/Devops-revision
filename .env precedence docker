@@ -23,3 +23,29 @@
 6. Shell environment where docker compose is executed
 
 7. Default values in code/application
+
+
+
+
+
++-----------------------------------------------------------+
+| 1️⃣ CLI Variables (-e or --env-file in `docker run`)      |
+|     Example: docker run -e MY_VAR=value                   |
++-----------------------------------------------------------+
+| 2️⃣ docker-compose.yml "environment:" section values       |
+|     Example:                                               |
+|     services:                                              |
+|       app:                                                 |
+|         environment:                                       |
+|           MY_VAR: value                                    |
++-----------------------------------------------------------+
+| 3️⃣ Values from .env file in project root (compose default)|
+|     - Loaded automatically by docker-compose               |
+|     - Can be overridden by CLI or docker-compose.yml        |
++-----------------------------------------------------------+
+| 4️⃣ Environment variables inherited from host machine       |
+|     - If no override exists above                           |
++-----------------------------------------------------------+
+| 5️⃣ Default values inside Dockerfile `ENV` instruction      |
+|     Example: ENV MY_VAR=default                             |
++-----------------------------------------------------------+

@@ -1,0 +1,25 @@
+# Docker Compose Environment Variable Precedence (Highest → Lowest)
+
+1. CLI Variables
+   docker compose run -e VAR=value
+   docker compose up -e VAR=value
+
+2. Service-level environment in compose file
+   services:
+     my_service:
+       environment:
+         VAR: value
+
+3. Environment file specified in compose file
+   services:
+     my_service:
+       env_file:
+         - my_service.env
+
+4. Top-level .env file (in project directory)
+
+5. Dockerfile ENV instruction (default inside image)
+
+6. Shell environment where docker compose is executed
+
+7. Default values in code/application

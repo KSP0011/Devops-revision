@@ -1,51 +1,252 @@
-# Docker Compose Environment Variable Precedence (Highest → Lowest)
+# 🚀 DOCKER COMPLETE DEVOPS NOTES (Theory + Commands + Comparisons + Interview Questions)
 
-1. CLI Variables
-   docker compose run -e VAR=value
-   docker compose up -e VAR=value
+====================================================================
+1️⃣ DOCKER BASICS
+====================================================================
+📌 Docker is a **containerization platform** that packages an application + dependencies into a container. Containers share the host OS kernel, making them lightweight and faster than VMs.
 
-2. Service-level environment in compose file
-   services:
-     my_service:
-       environment:
-         VAR: value
+🔹 Why Docker over VMs?
+| Feature        | VM                  | Docker Container         |
+|----------------|--------------------|--------------------------|
+| OS per app     | Yes (full OS)       | No (shares host kernel)  |
+| Startup time   | Minutes             | Seconds                  |
+| Size           | GBs                 | MBs                      |
+| Performance    | Heavy overhead      | Lightweight              |
 
-3. Environment file specified in compose file
-   services:
-     my_service:
-       env_file:
-         - my_service.env
+🔹 Core Components:
+- Docker Client → CLI/GUI to interact with Docker.
+- Docker Daemon → Runs in background, manages containers.
+- Docker Images → Read-only templates for containers.
+- Docker Containers → Running instances of images.
+- Docker Registry → Stores images (e.g., Docker Hub).
 
-4. Top-level .env file (in project directory)
+🔹 Basic Commands:
+docker --version
+docker info
+docker help
 
-5. Dockerfile ENV instruction (default inside image)
+💬 Interview Questions:
+1. Difference between VM & Container?
+2. Why is Docker lightweight?
+3. Components of Docker architecture?
 
-6. Shell environment where docker compose is executed
+====================================================================
+2️⃣ INSTALLATION & SERVICE
+====================================================================
+- Install Docker CE via apt/yum.
+- Check service:
+systemctl status docker
+systemctl start docker
 
-7. Default values in code/application
+💬 Interview Questions:
+1. How to check if Docker daemon is running?
+2. Where are Docker images stored on Linux?
 
+====================================================================
+3️⃣ DOCKER IMAGES
+====================================================================
+- Pull image:
+docker pull nginx:1.25
+- List images:
+docker images
+- Remove image:
+docker rmi <image_id>
+- Inspect image:
+docker inspect <image_name>
 
+💬 Interview Questions:
+1. Difference between image and container?
+2. How does Docker layer caching work?
 
+====================================================================
+4️⃣ DOCKER CONTAINERS
+====================================================================
+- Run container:
+docker run -it --name mycontainer ubuntu /bin/bash
+docker run -d -p 8080:80 nginx
+- List:
+docker ps      # running only
+docker ps -a   # all
+- Start/Stop:
+docker start <container>
+docker stop <container>
+- Exec into container:
+docker exec -it <container> bash
 
+💬 Interview Questions:
+1. Difference between docker exec and docker attach?
+2. How to run container in background?
 
-+-----------------------------------------------------------+
-| 1️⃣ CLI Variables (-e or --env-file in `docker run`)      |
-|     Example: docker run -e MY_VAR=value                   |
-+-----------------------------------------------------------+
-| 2️⃣ docker-compose.yml "environment:" section values       |
-|     Example:                                               |
-|     services:                                              |
-|       app:                                                 |
-|         environment:                                       |
-|           MY_VAR: value                                    |
-+-----------------------------------------------------------+
-| 3️⃣ Values from .env file in project root (compose default)|
-|     - Loaded automatically by docker-compose               |
-|     - Can be overridden by CLI or docker-compose.yml        |
-+-----------------------------------------------------------+
-| 4️⃣ Environment variables inherited from host machine       |
-|     - If no override exists above                           |
-+-----------------------------------------------------------+
-| 5️⃣ Default values inside Dockerfile `ENV` instruction      |
-|     Example: ENV MY_VAR=default                             |
-+-----------------------------------------------------------+
+====================================================================
+5️⃣ DOCKER VOLUMES
+====================================================================
+- Types: Named, Anonymous, Bind Mounts.
+- Create:
+docker volume create myvol
+- Use:
+docker run -v myvol:/data nginx
+- List:
+docker volume ls
+
+💬 Interview Questions:
+1. Difference between bind mount and volume?
+2. How to persist container data?
+
+====================================================================
+6️⃣ DOCKER NETWORKING
+====================================================================
+- Types:
+  bridge → Default, isolated.
+  host → Shares host network.
+  none → No networking.
+  overlay → Multi-host (Swarm/K8s).
+- Commands:
+docker network ls
+docker network inspect bridge
+docker network create --driver bridge mynet
+docker network connect mynet mycontainer
+
+💬 Interview Questions:
+1. Difference between bridge and host network?
+2. How do containers communicate in same network?
+
+====================================================================
+7️⃣ DOCKERFILE & BUILDING
+====================================================================
+Example Dockerfile:
+FROM ubuntu:20.04
+RUN apt-get update && apt-get install -y curl
+COPY app.sh /app.sh
+CMD ["bash", "/app.sh"]
+
+- Build:
+docker build -t myimage:v1 .
+
+💬 Interview Questions:
+1. Common Dockerfile instructions?
+2. How to reduce image size?
+
+====================================================================
+8️⃣ MULTI-STAGE BUILDS
+====================================================================
+- Reduce final image size.
+Example:
+FROM golang:1.20 AS builder
+WORKDIR /app
+COPY . .
+RUN go build -o myapp
+
+FROM alpine
+COPY --from=builder /app/myapp /usr/local/bin/myapp
+CMD ["myapp"]
+
+💬 Interview Questions:
+1. Why use multi-stage builds?
+2. Example use case?
+
+====================================================================
+9️⃣ IMAGE LAYERS & CACHING
+====================================================================
+- Each Dockerfile instruction = one layer.
+- Cache is reused if unchanged.
+- View:
+docker history <image>
+
+💬 Interview Questions:
+1. How does caching work?
+2. How to optimize caching?
+
+====================================================================
+🔟 TAGGING & PUSHING
+====================================================================
+- Tag:
+docker tag localimage myuser/myimage:v1
+- Login:
+docker login
+- Push:
+docker push myuser/myimage:v1
+
+💬 Interview Questions:
+1. Default tag if not specified?
+2. Best practices for tagging?
+
+====================================================================
+1️⃣1️⃣ DOCKER COMPOSE – ADVANCED
+====================================================================
+Example docker-compose.yml:
+version: "3.9"
+services:
+  web:
+    image: nginx
+    ports:
+      - "8080:80"
+    depends_on:
+      - db
+  db:
+    image: postgres
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: pass
+
+- Scale:
+docker-compose up -d --scale web=3
+
+💬 Interview Questions:
+1. Difference between Dockerfile and docker-compose?
+2. How to scale in Compose?
+
+====================================================================
+1️⃣2️⃣ DOCKER SWARM BASICS
+====================================================================
+- Init:
+docker swarm init
+- Join worker:
+docker swarm join --token <TOKEN> <IP>:2377
+- Deploy service:
+docker service create --name web --replicas 3 -p 80:80 nginx
+- Scale:
+docker service scale web=5
+
+💬 Interview Questions:
+1. Swarm vs Kubernetes?
+2. How to scale service?
+
+====================================================================
+1️⃣3️⃣ SECURITY BEST PRACTICES
+====================================================================
+- Use trusted images.
+- Scan images: trivy image myimage:latest
+- Use non-root user in Dockerfile:
+RUN adduser --disabled-password appuser
+USER appuser
+- Limit resources:
+docker run --memory=512m --cpus=1 myimage
+- Enable Content Trust:
+export DOCKER_CONTENT_TRUST=1
+
+💬 Interview Questions:
+1. How to prevent root in container?
+2. How to scan images?
+
+====================================================================
+1️⃣4️⃣ DOCKER vs KUBERNETES
+====================================================================
+| Feature | Docker | Kubernetes |
+|---------|--------|------------|
+| Purpose | Build/run containers | Orchestrate containers |
+| Scope | Single host | Multi-host clusters |
+| Scaling | Manual/Swarm | Auto-scaling |
+| Self-Healing | Limited | Full self-healing |
+
+💬 Interview Questions:
+1. Can Kubernetes run without Docker?
+2. Difference between Swarm & Kubernetes?
+
+====================================================================
+✅ DEVOPS TIPS
+====================================================================
+- Use .dockerignore to avoid copying unnecessary files.
+- Combine RUN commands to reduce layers.
+- Pin base image versions.
+- Tag with versions (avoid :latest in prod).
+- Keep images minimal.

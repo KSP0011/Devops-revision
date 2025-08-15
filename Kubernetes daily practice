@@ -1,0 +1,19 @@
+# 🟦 Kubernetes Quick Daily Revision
+
+# 1. Cluster basics
+kubectl cluster-info
+kubectl get nodes
+
+# 2. Pod basics
+kubectl run mynginx --image=nginx --port=80
+kubectl get pods
+
+# 3. Deployment basics
+kubectl create deployment webapp --image=nginx
+kubectl scale deployment webapp --replicas=3
+kubectl set image deployment/webapp nginx=nginx:1.27
+kubectl rollout undo deployment/webapp
+
+# 4. Service basics
+kubectl expose pod mynginx --type=NodePort --port=80
+kubectl get svc

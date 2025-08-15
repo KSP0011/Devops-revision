@@ -1,0 +1,48 @@
+# 🟦 Kubernetes Core Concepts (with commands)
+
+# 1. Pod – Smallest unit, usually runs 1 container.
+kubectl run mynginx --image=nginx --port=80
+kubectl get pods
+kubectl describe pod mynginx
+# Pods are ephemeral → if deleted, they don’t restart automatically.
+
+# 2. ReplicaSet – Ensures a desired number of Pods are running.
+# (Created/managed by Deployments automatically)
+kubectl get rs
+kubectl describe rs <replicaset-name>
+# Each rollout creates a new ReplicaSet with a unique hash.
+
+# 3. Deployment – Higher-level object for managing Pods/ReplicaSets.
+kubectl create deployment webapp --image=nginx
+kubectl get deployments
+kubectl describe deployment webapp
+
+# Scale Deployment (replicas for load balancing & HA)
+kubectl scale deployment webapp --replicas=3
+kubectl get pods
+
+# Update Deployment image (rolling update)
+kubectl set image deployment/webapp nginx=nginx:1.27
+kubectl rollout status deployment/webapp
+
+# Rollback if rollout fails
+kubectl rollout undo deployment/webapp
+
+# 4. Service – Stable network endpoint to access Pods.
+# Types: ClusterIP (default, internal), NodePort, LoadBalancer
+kubectl expose pod mynginx --type=NodePort --port=80
+kubectl get svc
+# Minikube helper:
+minikube service mynginx --url
+
+# 5. Debugging Pods
+kubectl get pods -l app=webapp
+kubectl describe pod <pod-name>
+kubectl logs <pod-name>
+# Common issues: ImagePullBackOff, CrashLoopBackOff
+
+# 🔑 Key Relationships
+# Pod = single container
+# ReplicaSet = maintains multiple Pods
+# Deployment = manages ReplicaSets (updates, scaling, rollback)
+# Service = stable networking to reach Pods
